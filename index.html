@@ -3,21 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Mitava</title>
+<title>For Mitava</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
 
 <style>
 body {
     margin: 0;
-    font-family: 'Poppins', sans-serif;
     background: black;
     color: white;
-    text-align: center;
+    font-family: 'Poppins', sans-serif;
     overflow: hidden;
 }
 
-.container {
+/* intro screen */
+#startScreen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+#startScreen h1 {
+    font-size: 2rem;
+    color: #ff4da6;
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px #ff4da6; }
+    to { text-shadow: 0 0 30px #ff4da6; }
+}
+
+/* main content */
+#main {
+    display: none;
+    text-align: center;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -26,75 +51,88 @@ body {
 
 h1 {
     font-size: 3rem;
-    animation: fadeIn 3s ease-in-out;
+    margin-bottom: 20px;
 }
 
-p {
+/* typing text */
+#text {
     font-size: 1.2rem;
-    margin-top: 20px;
-    opacity: 0;
-    animation: fadeIn 5s ease-in-out forwards;
+    max-width: 600px;
+    margin: auto;
+    line-height: 1.6;
 }
 
-@keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
-}
-
-/* glowing effect */
-.glow {
-    color: #ff4da6;
-    text-shadow: 0 0 10px #ff4da6, 0 0 20px #ff4da6;
-}
-
-/* floating hearts */
-.heart {
+/* stars */
+.star {
     position: absolute;
-    color: #ff4da6;
-    animation: float 6s infinite;
+    width: 2px;
+    height: 2px;
+    background: white;
+    animation: blink 2s infinite;
 }
 
-@keyframes float {
-    0% {transform: translateY(100vh);}
-    100% {transform: translateY(-10vh);}
+@keyframes blink {
+    50% { opacity: 0.3; }
 }
 </style>
 </head>
 
 <body>
 
-<audio autoplay loop>
+<div id="startScreen" onclick="start()">
+    <h1>Click to open your surprise ✨</h1>
+</div>
+
+<div id="main">
+    <h1>Happy Birthday Mitava 🎂</h1>
+    <div id="text"></div>
+</div>
+
+<audio id="music" loop>
     <source src="https://www.bensound.com/bensound-music/bensound-slowmotion.mp3" type="audio/mp3">
 </audio>
 
-<div class="container">
-    <h1 class="glow">Happy Birthday Mitava 🎂</h1>
-    
-    <p>
-        Shayad tu aa website expect nai karti...  
-        pan hu thodu alag karvu hatu 😊  
-        <br><br>
-        Tu pehla shu hati... ane have shu che,  
-        e badhu change thayu hoy pan  
-        ek respect ane care haju pan same che 💫  
-        <br><br>
-        Aaje taro day che...  
-        bas tu khush reh, smile karti reh 😊  
-        <br><br>
-        Happy Birthday once again ❤️
-    </p>
-</div>
-
 <script>
-// generate floating hearts
-for (let i = 0; i < 20; i++) {
-    let heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = "❤";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = (3 + Math.random() * 5) + "s";
-    document.body.appendChild(heart);
+
+// typing message
+let msg = `Shayad aa bas ek simple website lage... 
+pan aa pachhad thodu sachhu feeling che 😊
+
+Apdi story thodi alag hati...
+ane have je che e pan alag che.
+
+Hu bas etlu kahu chu —
+tu happy reh, ane life ma je pan kare, mast kar 💫
+
+Happy Birthday Mitava ❤️`;
+
+let i = 0;
+
+function type() {
+    if (i < msg.length) {
+        document.getElementById("text").innerHTML += msg.charAt(i);
+        i++;
+        setTimeout(type, 40);
+    }
 }
+
+// start function
+function start() {
+    document.getElementById("startScreen").style.display = "none";
+    document.getElementById("main").style.display = "block";
+    document.getElementById("music").play();
+    type();
+}
+
+// stars
+for (let i = 0; i < 80; i++) {
+    let star = document.createElement("div");
+    star.className = "star";
+    star.style.left = Math.random() * 100 + "vw";
+    star.style.top = Math.random() * 100 + "vh";
+    document.body.appendChild(star);
+}
+
 </script>
 
 </body>
